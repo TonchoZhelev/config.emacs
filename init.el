@@ -63,6 +63,13 @@
 (use-package magit
   :bind (("C-c g g" . 'magit)))
 
+(use-package company
+  :config
+  (setq company-tooltip-align-annotations t
+        company-minimum-prefix-length 1
+        company-idle-delay 0.0)
+  :hook (after-init . global-company-mode))
+
 ;; Load environment variables from shell, I'm not sure if this is actually a good idea
 
 (use-package exec-path-from-shell
