@@ -46,6 +46,7 @@
 	 ("M-X" . 'smex-major-mode-commands)))
 
 (use-package recentf
+  :commands (recentf-open-files)
   :init (recentf-mode 1)
   :bind (("C-x C-r" . 'recentf-open-files)))
 
@@ -59,7 +60,8 @@
 			   which-key-idle-delay 0.8
 			   which-key-max-description-length 25))
 
-(use-package magit)
+(use-package magit
+  :bind (("C-c g g" . 'magit)))
 
 ;; Load environment variables from shell, I'm not sure if this is actually a good idea
 
@@ -71,14 +73,15 @@
 ;; sets the completion style so that it works kinda like fzf
 (setq completion-styles '(flex basic partial-completion emacs22))
 
-
 (use-package lsp-mode
+  :commands (lsp lsp-deferred)
   :init (setq lsp-keymap-prefix "C-c l")
   :hook ((lsp-mode . lsp-enable-which-key-integration))
-  :commands (lsp lsp-deferred))
+  :config (setq lsp-headerline-breadcrumb-enable nil))
 
-(use-package lsp-treemacs)
-(use-package lsp-ui :commands lsp-ui-mode)
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 ;; dart
 (use-package dart-mode)
@@ -109,7 +112,7 @@
  '(custom-safe-themes
    '("d77d6ba33442dd3121b44e20af28f1fae8eeda413b2c3d3b9f1315fbda021992" "80214de566132bf2c844b9dee3ec0599f65c5a1f2d6ff21a2c8309e6e70f9242" default))
  '(package-selected-packages
-   '(exec-path-from-shell company lsp-ui lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
+   '(exec-path-from-shell lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
