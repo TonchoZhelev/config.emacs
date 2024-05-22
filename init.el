@@ -70,6 +70,13 @@
         company-idle-delay 0.0)
   :hook (after-init . global-company-mode))
 
+(use-package yasnippet-snippets)
+
+(use-package yasnippet
+  :commands (yas-global-mode yas-reload-all)
+  :config (progn (yas-global-mode t)
+		 (yas-reload-all)))
+
 ;; Load environment variables from shell, I'm not sure if this is actually a good idea
 
 (use-package exec-path-from-shell
@@ -119,7 +126,7 @@
  '(custom-safe-themes
    '("d77d6ba33442dd3121b44e20af28f1fae8eeda413b2c3d3b9f1315fbda021992" "80214de566132bf2c844b9dee3ec0599f65c5a1f2d6ff21a2c8309e6e70f9242" default))
  '(package-selected-packages
-   '(exec-path-from-shell lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
+   '(yasnippet-snippets exec-path-from-shell lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
