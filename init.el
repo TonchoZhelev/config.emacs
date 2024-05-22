@@ -7,6 +7,9 @@
 (set-frame-font "Comic Mono 16" nil t)
 (setq backup-directory-alist '(("." . "~/.cache/emacs/"))) ;; save backup files in the cache directory, instead of in the same dir as the file being edited
 
+;; Refreshes files from disk if they change on disk, but not in emacs
+(global-auto-revert-mode t)
+
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
@@ -19,9 +22,6 @@
 ;; If there are no archived package contents, refresh them
 (when (not package-archive-contents)
   (package-refresh-contents))
-
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 (unless (display-graphic-p)
   (xterm-mouse-mode 1))
@@ -40,7 +40,15 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-;; 
+;;
+(use-package smex
+  :bind (("M-x" . 'smex)
+	 ("M-X" . 'smex-major-mode-commands)))
+
+(use-package recentf
+  :init (recentf-mode 1)
+  :bind (("C-x C-r" . 'recentf-open-files)))
+
 (use-package which-key
 	     :init (which-key-mode)
 	     :config (setq which-key-side-window-location 'bottom
@@ -48,20 +56,26 @@
 			   which-key-sort-uppercase-first nil
 			   which-key-add-column-padding 1
 			   which-key-max-display-columns nil
-			   which-key-min-display-lines 6
-			   which-key-side-window-slot -10
-			   which-key-side-window-max-height 0.25
 			   which-key-idle-delay 0.8
-			   which-key-max-description-length 25
-			   which-key-allow-imprecise-window-fit t))
+			   which-key-max-description-length 25))
 
 (use-package magit)
 
+;; Load environment variables from shell, I'm not sure if this is actually a good idea
+
+(use-package exec-path-from-shell
+  :init (exec-path-from-shell-initialize))
+
 ;; lsp
+
+;; sets the completion style so that it works kinda like fzf
+(setq completion-styles '(flex basic partial-completion emacs22))
+
+
 (use-package lsp-mode
   :init (setq lsp-keymap-prefix "C-c l")
   :hook ((lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  :commands (lsp lsp-deferred))
 
 (use-package lsp-treemacs)
 (use-package lsp-ui :commands lsp-ui-mode)
@@ -75,11 +89,16 @@
   :config (setq lsp-dart-sdk-dir "~/flutter/current/bin/cache/dart-sdk/"))
 
 ;; python
-(use-package elpy
-  :hook (python-mode . lsp-deferred)
-  :init (elpy-enable))
+(use-package poetry)
 
-(use-package py-autopep8)
+(use-package lsp-pyright
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred))))
+
+
+;; key bindings
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -90,7 +109,7 @@
  '(custom-safe-themes
    '("d77d6ba33442dd3121b44e20af28f1fae8eeda413b2c3d3b9f1315fbda021992" "80214de566132bf2c844b9dee3ec0599f65c5a1f2d6ff21a2c8309e6e70f9242" default))
  '(package-selected-packages
-   '(elpy company lsp-ui lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
+   '(exec-path-from-shell company lsp-ui lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
