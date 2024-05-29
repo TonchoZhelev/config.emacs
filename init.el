@@ -15,6 +15,11 @@
 
 (ido-mode 1)
 
+;; Set a 80 column rule for programming modes
+(setq display-fill-column-indicator-column 80)
+(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -102,8 +107,7 @@
 (use-package flutter)
 
 (use-package lsp-dart
-  :hook (dart-mode . lsp-deferred)
-  :config (setq lsp-dart-sdk-dir "~/flutter/current/bin/cache/dart-sdk/"))
+  :hook (dart-mode . lsp-deferred))
 
 ;; python
 (use-package poetry)
