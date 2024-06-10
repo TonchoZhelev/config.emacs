@@ -31,8 +31,6 @@
 (unless (display-graphic-p)
   (xterm-mouse-mode 1))
 
-(setq catppuccin-flavor 'macchiato) ;; or 'latte, 'frappe, or 'mocha
-
 ;; Makes the background transparent in terminal
 (defun on-after-init ()
   (unless (display-graphic-p (selected-frame))
@@ -46,6 +44,32 @@
 (setq use-package-always-ensure t)
 
 ;;
+
+(use-package catppuccin-theme
+  :config (setq catppuccin-flavor 'macchiato)) ;; or 'latte, 'frappe, or 'mocha
+
+(use-package auto-dark
+  :config
+  (setq auto-dark-dark-theme 'catppuccin)
+  (setq auto-dark-light-theme 'catppuccin)
+
+  (add-hook 'auto-dark-dark-mode-hook
+	    (lambda ()
+	      (setq catppuccin-flavor 'macchiato)
+	      (catppuccin-reload)))
+
+  (add-hook 'auto-dark-light-mode-hook
+	    (lambda ()
+	      (setq catppuccin-flavor 'frappe)
+	      (catppuccin-reload)))
+  (auto-dark-mode t))
+
+(use-package undo-tree
+  :init (global-undo-tree-mode)
+  :config (setq undo-tree-visualizer-diff t
+		undo-tree-visualizer-timestamps t
+		undo-tree-auto-save-history t))
+
 (use-package smex
   :bind (("M-x" . 'smex)
 	 ("M-X" . 'smex-major-mode-commands)))
@@ -99,7 +123,6 @@
   :config (setq lsp-headerline-breadcrumb-enable nil))
 
 (use-package flycheck
-  :ensure t
   :init (global-flycheck-mode))
 
 ;; dart
@@ -107,7 +130,8 @@
 (use-package flutter)
 
 (use-package lsp-dart
-  :hook (dart-mode . lsp-deferred))
+  :hook (dart-mode . lsp-deferred)
+  :config (setq lsp-dart-dap-flutter-hot-reload-on-save t))
 
 ;; python
 (use-package poetry)
@@ -130,7 +154,7 @@
  '(custom-safe-themes
    '("d77d6ba33442dd3121b44e20af28f1fae8eeda413b2c3d3b9f1315fbda021992" "80214de566132bf2c844b9dee3ec0599f65c5a1f2d6ff21a2c8309e6e70f9242" default))
  '(package-selected-packages
-   '(yasnippet-snippets exec-path-from-shell lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
+   '(undo-tree yasnippet-snippets exec-path-from-shell lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
