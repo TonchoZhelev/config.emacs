@@ -93,11 +93,11 @@
   :bind (("C-c g g" . 'magit)))
 
 (use-package company
+  :hook (after-init . global-company-mode)
   :config
   (setq company-tooltip-align-annotations t
         company-minimum-prefix-length 1
-        company-idle-delay 0.0)
-  :hook (after-init . global-company-mode))
+        company-idle-delay 1.0))
 
 (use-package yasnippet-snippets)
 
