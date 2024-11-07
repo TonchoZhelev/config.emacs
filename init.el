@@ -45,25 +45,6 @@
 
 ;;
 
-(use-package catppuccin-theme
-  :config (setq catppuccin-flavor 'macchiato)) ;; or 'latte, 'frappe, or 'mocha
-
-(use-package auto-dark
-  :config
-  (setq auto-dark-dark-theme 'catppuccin)
-  (setq auto-dark-light-theme 'catppuccin)
-
-  (add-hook 'auto-dark-dark-mode-hook
-	    (lambda ()
-	      (setq catppuccin-flavor 'macchiato)
-	      (catppuccin-reload)))
-
-  (add-hook 'auto-dark-light-mode-hook
-	    (lambda ()
-	      (setq catppuccin-flavor 'frappe)
-	      (catppuccin-reload)))
-  (auto-dark-mode t))
-
 (use-package undo-tree
   :init (global-undo-tree-mode)
   :config (setq undo-tree-visualizer-diff t
@@ -150,11 +131,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(catppuccin))
+ '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
-   '("d77d6ba33442dd3121b44e20af28f1fae8eeda413b2c3d3b9f1315fbda021992" "80214de566132bf2c844b9dee3ec0599f65c5a1f2d6ff21a2c8309e6e70f9242" default))
+   '("dfab4d4e2904967f208647d14b15015a613c4ab904db491116a7c0968e44a115" "d77d6ba33442dd3121b44e20af28f1fae8eeda413b2c3d3b9f1315fbda021992" "80214de566132bf2c844b9dee3ec0599f65c5a1f2d6ff21a2c8309e6e70f9242" default))
  '(package-selected-packages
-   '(undo-tree yasnippet-snippets exec-path-from-shell lsp-dart flutter dart-mode magit which-key catppuccin-theme smex)))
+   '(undo-tree yasnippet-snippets exec-path-from-shell lsp-dart flutter dart-mode magit which-key smex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
